@@ -1,0 +1,71 @@
+Microsoft Windows [Version 10.0.18362.836]
+(c) 2019 Microsoft Corporation. All rights reserved.
+
+C:\Users\ADMIN>mysql -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 18
+Server version: 8.0.20 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database nyc_of_Luc_Le;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| classicmodels      |
+| information_schema |
+| luc_le             |
+| my_database        |
+| mysql              |
+| nyc_of_luc_le      |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+10 rows in set (0.00 sec)
+
+mysql> use nyc_of_luc_le;
+Database changed
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> create table nyc;
+ERROR 1113 (42000): A table must have at least 1 column
+mysql> create table nyc(id varchar(20), name varchar(50));
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> show tables;
++-------------------------+
+| Tables_in_nyc_of_luc_le |
++-------------------------+
+| nyc                     |
++-------------------------+
+1 row in set (0.00 sec)
+
+mysql> insert into nyc (id, name) values ('1','kieu anh xinh 1');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into nyc (id, name) values ('2','kieu anh xinh 2');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from nyc;
++------+-----------------+
+| id   | name            |
++------+-----------------+
+| 1    | kieu anh xinh 1 |
+| 2    | kieu anh xinh 2 |
++------+-----------------+
+2 rows in set (0.00 sec)
+
+mysql>
