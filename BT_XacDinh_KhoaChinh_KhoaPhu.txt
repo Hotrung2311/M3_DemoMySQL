@@ -1,0 +1,127 @@
+
+C:\Users\ADMIN>mysql -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 50
+Server version: 8.0.20 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++----------------------------+
+| Database                   |
++----------------------------+
+| classicmodels              |
+| contact                    |
+| information_schema         |
+| luc_le                     |
+| m3_w1_th_create_foreignkey |
+| m3_w1_th_createprimarykey  |
+| my_database                |
+| mysql                      |
+| nyc_of_luc_le              |
+| performance_schema         |
+| sakila                     |
+| sys                        |
+| world                      |
++----------------------------+
+13 rows in set (0.00 sec)
+
+mysql> create database m3_w1_BT_XD_pk_fk;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> show databases;
++----------------------------+
+| Database                   |
++----------------------------+
+| classicmodels              |
+| contact                    |
+| information_schema         |
+| luc_le                     |
+| m3_w1_bt_xd_pk_fk          |
+| m3_w1_th_create_foreignkey |
+| m3_w1_th_createprimarykey  |
+| my_database                |
+| mysql                      |
+| nyc_of_luc_le              |
+| performance_schema         |
+| sakila                     |
+| sys                        |
+| world                      |
++----------------------------+
+14 rows in set (0.00 sec)
+
+mysql> use m3_w1_bt_xd_pk_fk;
+Database changed
+mysql> create table customers;
+ERROR 1113 (42000): A table must have at least 1 column
+mysql> create table customers(
+    -> customer_number int not null primary key,
+    -> full_name varchar(255) not null,
+    -> address varchar(500),
+    -> email varchar(255),
+    -> phone varchar(20)
+    -> );
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> describe customers;
++-----------------+--------------+------+-----+---------+-------+
+| Field           | Type         | Null | Key | Default | Extra |
++-----------------+--------------+------+-----+---------+-------+
+| customer_number | int          | NO   | PRI | NULL    |       |
+| full_name       | varchar(255) | NO   |     | NULL    |       |
+| address         | varchar(500) | YES  |     | NULL    |       |
+| email           | varchar(255) | YES  |     | NULL    |       |
+| phone           | varchar(20)  | YES  |     | NULL    |       |
++-----------------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> create table Accounts(
+    -> account_number int not null primary key,
+    -> customer_number int not null,
+    -> foreign key (customer_number) references customers(customer_number),
+    -> date date not null,
+    -> balance int not null
+    -> );
+Query OK, 0 rows affected (0.58 sec)
+
+mysql> describe accounts;
++-----------------+------+------+-----+---------+-------+
+| Field           | Type | Null | Key | Default | Extra |
++-----------------+------+------+-----+---------+-------+
+| account_number  | int  | NO   | PRI | NULL    |       |
+| customer_number | int  | NO   | MUL | NULL    |       |
+| date            | date | NO   |     | NULL    |       |
+| balance         | int  | NO   |     | NULL    |       |
++-----------------+------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> create table transactions(
+    -> tran_number int not null primary key,
+    -> account_number int not null,
+    -> foreign key (account_number) references accounts(account_number),
+    -> date date not null,
+    -> amounts int not null,
+    -> description varchar(500)
+    -> );
+Query OK, 0 rows affected (0.16 sec)
+
+mysql> describe transactions;
++----------------+--------------+------+-----+---------+-------+
+| Field          | Type         | Null | Key | Default | Extra |
++----------------+--------------+------+-----+---------+-------+
+| tran_number    | int          | NO   | PRI | NULL    |       |
+| account_number | int          | NO   | MUL | NULL    |       |
+| date           | date         | NO   |     | NULL    |       |
+| amounts        | int          | NO   |     | NULL    |       |
+| description    | varchar(500) | YES  |     | NULL    |       |
++----------------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql>
