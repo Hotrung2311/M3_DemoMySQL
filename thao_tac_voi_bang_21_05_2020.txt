@@ -1,0 +1,182 @@
+Microsoft Windows [Version 10.0.18362.836]
+(c) 2019 Microsoft Corporation. All rights reserved.
+
+C:\Users\ADMIN>mysql -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 45
+Server version: 8.0.20 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| classicmodels      |
+| contact            |
+| information_schema |
+| luc_le             |
+| my_database        |
+| mysql              |
+| nyc_of_luc_le      |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+11 rows in set (0.00 sec)
+
+mysql> use contact;
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_contact |
++-------------------+
+| contacts          |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from contacts;
+Empty set (0.00 sec)
+
+mysql> create table suppliers();
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> create table suppliers(supplier_id int(11) not null auto_increment, supplier_name varchar(50) not null, account_rep varchar(30) not null default 'TBD',contraint suppliers_pk primary key(supplier_id));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'suppliers_pk primary key(supplier_id))' at line 1
+mysql> create table suppliers(supplier_id int(11) not null auto_increment, supplier_name varchar(50) not null, account_rep varchar(30) not null default 'TBD',constraint suppliers_pk primary key(supplier_id));
+Query OK, 0 rows affected, 1 warning (0.10 sec)
+
+mysql> shows tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'shows tables' at line 1
+mysql> show tables;
++-------------------+
+| Tables_in_contact |
++-------------------+
+| contacts          |
+| suppliers         |
++-------------------+
+2 rows in set (0.00 sec)
+
+mysql> alter table contacts
+    -> add last_name varchar(40) not null
+    -> after contact_id;
+Query OK, 0 rows affected (0.32 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from contacts;
+Empty set (0.00 sec)
+
+mysql> show columns from contacts;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| contact_id  | int         | NO   | PRI | NULL    | auto_increment |
+| last_name   | varchar(40) | NO   |     | NULL    |                |
+| last_nanme  | varchar(30) | NO   |     | NULL    |                |
+| first_nanme | varchar(20) | YES  |     | NULL    |                |
+| birthday    | date        | YES  |     | NULL    |                |
++-------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> describe contacts;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| contact_id  | int         | NO   | PRI | NULL    | auto_increment |
+| last_name   | varchar(40) | NO   |     | NULL    |                |
+| last_nanme  | varchar(30) | NO   |     | NULL    |                |
+| first_nanme | varchar(20) | YES  |     | NULL    |                |
+| birthday    | date        | YES  |     | NULL    |                |
++-------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table contacts drop last_name;
+Query OK, 0 rows affected (0.32 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe contacts;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| contact_id  | int         | NO   | PRI | NULL    | auto_increment |
+| last_nanme  | varchar(30) | NO   |     | NULL    |                |
+| first_nanme | varchar(20) | YES  |     | NULL    |                |
+| birthday    | date        | YES  |     | NULL    |                |
++-------------+-------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into contacts (last_name, first_name, birthday) values ('Ho', 'Trung','23-11-1997');
+ERROR 1054 (42S22): Unknown column 'last_name' in 'field list'
+mysql> insert into contacts (last_nanme, first_nanme, birthday) values ('Ho', 'Trung','23-11-1997');
+ERROR 1292 (22007): Incorrect date value: '23-11-1997' for column 'birthday' at row 1
+mysql> insert into contacts (last_nanme, first_nanme, birthday) values ('Ho', 'Trung','1997-11-23');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * contacts;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'contacts' at line 1
+mysql> select * from contacts;
++------------+------------+-------------+------------+
+| contact_id | last_nanme | first_nanme | birthday   |
++------------+------------+-------------+------------+
+|          1 | Ho         | Trung       | 1997-11-23 |
++------------+------------+-------------+------------+
+1 row in set (0.00 sec)
+
+mysql> alter table contacts
+    -> add last_name varchar(40) not null
+    -> after contact_id,
+    -> add first_name varchar (35) null
+    -> after last_name;
+Query OK, 0 rows affected (0.60 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe contacts;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| contact_id  | int         | NO   | PRI | NULL    | auto_increment |
+| last_name   | varchar(40) | NO   |     | NULL    |                |
+| first_name  | varchar(35) | YES  |     | NULL    |                |
+| last_nanme  | varchar(30) | NO   |     | NULL    |                |
+| first_nanme | varchar(20) | YES  |     | NULL    |                |
+| birthday    | date        | YES  |     | NULL    |                |
++-------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> alter table contacts change column last_name ho varchar(20) null;
+Query OK, 1 row affected (0.29 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> describe contacts;
++-------------+-------------+------+-----+---------+----------------+
+| Field       | Type        | Null | Key | Default | Extra          |
++-------------+-------------+------+-----+---------+----------------+
+| contact_id  | int         | NO   | PRI | NULL    | auto_increment |
+| ho          | varchar(20) | YES  |     | NULL    |                |
+| first_name  | varchar(35) | YES  |     | NULL    |                |
+| last_nanme  | varchar(30) | NO   |     | NULL    |                |
+| first_nanme | varchar(20) | YES  |     | NULL    |                |
+| birthday    | date        | YES  |     | NULL    |                |
++-------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.01 sec)
+
+mysql> alter table contacts rename to Danh_ba;
+Query OK, 0 rows affected (0.13 sec)
+
+mysql> show tables;
++-------------------+
+| Tables_in_contact |
++-------------------+
+| danh_ba           |
+| suppliers         |
++-------------------+
+2 rows in set (0.00 sec)
+
+mysql>
