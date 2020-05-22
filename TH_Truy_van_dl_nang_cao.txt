@@ -1,0 +1,393 @@
+
+C:\Users\ADMIN>mysql -u root -p
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 53
+Server version: 8.0.20 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++----------------------------+
+| Database                   |
++----------------------------+
+| bai_tap_view               |
+| car_seller_db              |
+| classicmodels              |
+| contact                    |
+| information_schema         |
+| luc_le                     |
+| m3_w1_bt_xd_pk_fk          |
+| m3_w1_th_create_foreignkey |
+| m3_w1_th_createprimarykey  |
+| my_database                |
+| mysql                      |
+| nyc_of_luc_le              |
+| performance_schema         |
+| sakila                     |
+| sys                        |
+| world                      |
++----------------------------+
+16 rows in set (0.00 sec)
+
+mysql> use classicmodels;
+Database changed
+mysql> show tables;
++-------------------------+
+| Tables_in_classicmodels |
++-------------------------+
+| customers               |
+| employees               |
+| offices                 |
+| orderdetails            |
+| orders                  |
+| payments                |
+| productlines            |
+| products                |
++-------------------------+
+8 rows in set (0.01 sec)
+
+mysql> describe products;
++--------------------+---------------+------+-----+---------+-------+
+| Field              | Type          | Null | Key | Default | Extra |
++--------------------+---------------+------+-----+---------+-------+
+| productCode        | varchar(15)   | NO   | PRI | NULL    |       |
+| productName        | varchar(70)   | NO   |     | NULL    |       |
+| productLine        | varchar(50)   | NO   | MUL | NULL    |       |
+| productScale       | varchar(10)   | NO   |     | NULL    |       |
+| productVendor      | varchar(50)   | NO   |     | NULL    |       |
+| productDescription | text          | NO   |     | NULL    |       |
+| quantityInStock    | smallint      | NO   |     | NULL    |       |
+| buyPrice           | decimal(10,2) | NO   |     | NULL    |       |
+| MSRP               | decimal(10,2) | NO   |     | NULL    |       |
++--------------------+---------------+------+-----+---------+-------+
+9 rows in set (0.04 sec)
+
+mysql> describe productlines;
++-----------------+---------------+------+-----+---------+-------+
+| Field           | Type          | Null | Key | Default | Extra |
++-----------------+---------------+------+-----+---------+-------+
+| productLine     | varchar(50)   | NO   | PRI | NULL    |       |
+| textDescription | varchar(4000) | YES  |     | NULL    |       |
+| htmlDescription | mediumtext    | YES  |     | NULL    |       |
+| image           | mediumblob    | YES  |     | NULL    |       |
++-----------------+---------------+------+-----+---------+-------+
+4 rows in set (0.10 sec)
+
+mysql> select productCode, productName, buyprice, quantityInStock from products
+    -> where buyprice > 56.76 and quantityInStock >10;
++-------------+-----------------------------------------+----------+-----------------+
+| productCode | productName                             | buyprice | quantityInStock |
++-------------+-----------------------------------------+----------+-----------------+
+| S10_1949    | 1952 Alpine Renault 1300                |    98.58 |            7305 |
+| S10_2016    | 1996 Moto Guzzi 1100i                   |    68.99 |            6625 |
+| S10_4698    | 2003 Harley-Davidson Eagle Drag Bike    |    91.02 |            5582 |
+| S10_4757    | 1972 Alfa Romeo GTA                     |    85.68 |            3252 |
+| S10_4962    | 1962 LanciaA Delta 16V                  |   103.42 |            6791 |
+| S12_1099    | 1968 Ford Mustang                       |    95.34 |              68 |
+| S12_1108    | 2001 Ferrari Enzo                       |    95.59 |            3619 |
+| S12_1666    | 1958 Setra Bus                          |    77.90 |            1579 |
+| S12_2823    | 2002 Suzuki XREO                        |    66.27 |            9997 |
+| S12_3148    | 1969 Corvair Monza                      |    89.14 |            6906 |
+| S12_3380    | 1968 Dodge Charger                      |    75.16 |            9123 |
+| S12_3891    | 1969 Ford Falcon                        |    83.05 |            1049 |
+| S12_4675    | 1969 Dodge Charger                      |    58.73 |            7323 |
+| S18_1097    | 1940 Ford Pickup Truck                  |    58.33 |            2613 |
+| S18_1129    | 1993 Mazda RX-7                         |    83.51 |            3975 |
+| S18_1342    | 1937 Lincoln Berline                    |    60.62 |            8693 |
+| S18_1589    | 1965 Aston Martin DB5                   |    65.96 |            9042 |
+| S18_1662    | 1980s Black Hawk Helicopter             |    77.27 |            5330 |
+| S18_1749    | 1917 Grand Touring Sedan                |    86.70 |            2724 |
+| S18_1984    | 1995 Honda Civic                        |    93.89 |            9772 |
+| S18_2238    | 1998 Chrysler Plymouth Prowler          |   101.51 |            4724 |
+| S18_2319    | 1964 Mercedes Tour Bus                  |    74.86 |            8258 |
+| S18_2325    | 1932 Model A Ford J-Coupe               |    58.48 |            9354 |
+| S18_2795    | 1928 Mercedes-Benz SSK                  |    72.56 |             548 |
+| S18_2949    | 1913 Ford Model T Speedster             |    60.78 |            4189 |
+| S18_3136    | 18th Century Vintage Horse Carriage     |    60.74 |            5992 |
+| S18_3140    | 1903 Ford Model A                       |    68.30 |            3913 |
+| S18_3232    | 1992 Ferrari 360 Spider red             |    77.90 |            8347 |
+| S18_3233    | 1985 Toyota Supra                       |    57.01 |            7733 |
+| S18_3259    | Collectable Wooden Train                |    67.56 |            6450 |
+| S18_3320    | 1917 Maxwell Touring Car                |    57.54 |            7913 |
+| S18_3482    | 1976 Ford Gran Torino                   |    73.49 |            9127 |
+| S18_3685    | 1948 Porsche Type 356 Roadster          |    62.16 |            8990 |
+| S18_3856    | 1941 Chevrolet Special Deluxe Cabriolet |    64.58 |            2378 |
+| S18_4027    | 1970 Triumph Spitfire                   |    91.92 |            5545 |
+| S18_4600    | 1940s Ford truck                        |    84.76 |            3128 |
+| S18_4721    | 1957 Corvette Convertible               |    69.93 |            1249 |
+| S24_1578    | 1997 BMW R 1100 S                       |    60.86 |            7003 |
+| S24_1785    | 1928 British Royal Navy Airplane        |    66.74 |            3627 |
+| S24_2011    | 18th century schooner                   |    82.34 |            1898 |
+| S24_2300    | 1962 Volkswagen Microbus                |    61.34 |            2327 |
+| S24_2887    | 1952 Citroen-15CV                       |    72.82 |            1452 |
+| S24_3432    | 2002 Chevy Corvette                     |    62.11 |            9446 |
+| S24_3856    | 1956 Porsche 356A Coupe                 |    98.30 |            6600 |
+| S24_4048    | 1992 Porsche Cayenne Turbo Silver       |    69.78 |            6582 |
+| S24_4258    | 1936 Chrysler Airflow                   |    57.46 |            4710 |
+| S32_1374    | 1997 BMW F650 ST                        |    66.92 |             178 |
+| S50_1392    | Diamond T620 Semi-Skirted Tanker        |    68.29 |            1016 |
+| S700_2466   | America West Airlines B757-200          |    68.80 |            9653 |
+| S700_2834   | ATA: B757-300                           |    59.33 |            7106 |
++-------------+-----------------------------------------+----------+-----------------+
+50 rows in set (0.36 sec)
+
+mysql> select productCode, productName, buyprice from products
+    -> inner join productlines
+    -> on products.productline = productlines.productline
+    -> where buyprice > 56.75 and buyprice <95.59;
++-------------+-----------------------------------------+----------+
+| productCode | productName                             | buyprice |
++-------------+-----------------------------------------+----------+
+| S10_2016    | 1996 Moto Guzzi 1100i                   |    68.99 |
+| S10_4698    | 2003 Harley-Davidson Eagle Drag Bike    |    91.02 |
+| S10_4757    | 1972 Alfa Romeo GTA                     |    85.68 |
+| S12_1099    | 1968 Ford Mustang                       |    95.34 |
+| S12_1666    | 1958 Setra Bus                          |    77.90 |
+| S12_2823    | 2002 Suzuki XREO                        |    66.27 |
+| S12_3148    | 1969 Corvair Monza                      |    89.14 |
+| S12_3380    | 1968 Dodge Charger                      |    75.16 |
+| S12_3891    | 1969 Ford Falcon                        |    83.05 |
+| S12_4675    | 1969 Dodge Charger                      |    58.73 |
+| S18_1097    | 1940 Ford Pickup Truck                  |    58.33 |
+| S18_1129    | 1993 Mazda RX-7                         |    83.51 |
+| S18_1342    | 1937 Lincoln Berline                    |    60.62 |
+| S18_1589    | 1965 Aston Martin DB5                   |    65.96 |
+| S18_1662    | 1980s Black Hawk Helicopter             |    77.27 |
+| S18_1749    | 1917 Grand Touring Sedan                |    86.70 |
+| S18_1984    | 1995 Honda Civic                        |    93.89 |
+| S18_2319    | 1964 Mercedes Tour Bus                  |    74.86 |
+| S18_2325    | 1932 Model A Ford J-Coupe               |    58.48 |
+| S18_2795    | 1928 Mercedes-Benz SSK                  |    72.56 |
+| S18_2870    | 1999 Indy 500 Monte Carlo SS            |    56.76 |
+| S18_2949    | 1913 Ford Model T Speedster             |    60.78 |
+| S18_3136    | 18th Century Vintage Horse Carriage     |    60.74 |
+| S18_3140    | 1903 Ford Model A                       |    68.30 |
+| S18_3232    | 1992 Ferrari 360 Spider red             |    77.90 |
+| S18_3233    | 1985 Toyota Supra                       |    57.01 |
+| S18_3259    | Collectable Wooden Train                |    67.56 |
+| S18_3320    | 1917 Maxwell Touring Car                |    57.54 |
+| S18_3482    | 1976 Ford Gran Torino                   |    73.49 |
+| S18_3685    | 1948 Porsche Type 356 Roadster          |    62.16 |
+| S18_3856    | 1941 Chevrolet Special Deluxe Cabriolet |    64.58 |
+| S18_4027    | 1970 Triumph Spitfire                   |    91.92 |
+| S18_4600    | 1940s Ford truck                        |    84.76 |
+| S18_4721    | 1957 Corvette Convertible               |    69.93 |
+| S24_1578    | 1997 BMW R 1100 S                       |    60.86 |
+| S24_1785    | 1928 British Royal Navy Airplane        |    66.74 |
+| S24_2011    | 18th century schooner                   |    82.34 |
+| S24_2300    | 1962 Volkswagen Microbus                |    61.34 |
+| S24_2887    | 1952 Citroen-15CV                       |    72.82 |
+| S24_3432    | 2002 Chevy Corvette                     |    62.11 |
+| S24_4048    | 1992 Porsche Cayenne Turbo Silver       |    69.78 |
+| S24_4258    | 1936 Chrysler Airflow                   |    57.46 |
+| S32_1374    | 1997 BMW F650 ST                        |    66.92 |
+| S50_1392    | Diamond T620 Semi-Skirted Tanker        |    68.29 |
+| S700_2466   | America West Airlines B757-200          |    68.80 |
+| S700_2834   | ATA: B757-300                           |    59.33 |
++-------------+-----------------------------------------+----------+
+46 rows in set (0.14 sec)
+
+mysql> describe products;
++--------------------+---------------+------+-----+---------+-------+
+| Field              | Type          | Null | Key | Default | Extra |
++--------------------+---------------+------+-----+---------+-------+
+| productCode        | varchar(15)   | NO   | PRI | NULL    |       |
+| productName        | varchar(70)   | NO   |     | NULL    |       |
+| productLine        | varchar(50)   | NO   | MUL | NULL    |       |
+| productScale       | varchar(10)   | NO   |     | NULL    |       |
+| productVendor      | varchar(50)   | NO   |     | NULL    |       |
+| productDescription | text          | NO   |     | NULL    |       |
+| quantityInStock    | smallint      | NO   |     | NULL    |       |
+| buyPrice           | decimal(10,2) | NO   |     | NULL    |       |
+| MSRP               | decimal(10,2) | NO   |     | NULL    |       |
++--------------------+---------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql> describe productlines;
++-----------------+---------------+------+-----+---------+-------+
+| Field           | Type          | Null | Key | Default | Extra |
++-----------------+---------------+------+-----+---------+-------+
+| productLine     | varchar(50)   | NO   | PRI | NULL    |       |
+| textDescription | varchar(4000) | YES  |     | NULL    |       |
+| htmlDescription | mediumtext    | YES  |     | NULL    |       |
+| image           | mediumblob    | YES  |     | NULL    |       |
++-----------------+---------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select productname, productline from products;
++---------------------------------------------+------------------+
+| productname                                 | productline      |
++---------------------------------------------+------------------+
+| 1969 Harley Davidson Ultimate Chopper       | Motorcycles      |
+| 1952 Alpine Renault 1300                    | Classic Cars     |
+| 1996 Moto Guzzi 1100i                       | Motorcycles      |
+| 2003 Harley-Davidson Eagle Drag Bike        | Motorcycles      |
+| 1972 Alfa Romeo GTA                         | Classic Cars     |
+| 1962 LanciaA Delta 16V                      | Classic Cars     |
+| 1968 Ford Mustang                           | Classic Cars     |
+| 2001 Ferrari Enzo                           | Classic Cars     |
+| 1958 Setra Bus                              | Trucks and Buses |
+| 2002 Suzuki XREO                            | Motorcycles      |
+| 1969 Corvair Monza                          | Classic Cars     |
+| 1968 Dodge Charger                          | Classic Cars     |
+| 1969 Ford Falcon                            | Classic Cars     |
+| 1970 Plymouth Hemi Cuda                     | Classic Cars     |
+| 1957 Chevy Pickup                           | Trucks and Buses |
+| 1969 Dodge Charger                          | Classic Cars     |
+| 1940 Ford Pickup Truck                      | Trucks and Buses |
+| 1993 Mazda RX-7                             | Classic Cars     |
+| 1937 Lincoln Berline                        | Vintage Cars     |
+| 1936 Mercedes-Benz 500K Special Roadster    | Vintage Cars     |
+| 1965 Aston Martin DB5                       | Classic Cars     |
+| 1980s Black Hawk Helicopter                 | Planes           |
+| 1917 Grand Touring Sedan                    | Vintage Cars     |
+| 1948 Porsche 356-A Roadster                 | Classic Cars     |
+| 1995 Honda Civic                            | Classic Cars     |
+| 1998 Chrysler Plymouth Prowler              | Classic Cars     |
+| 1911 Ford Town Car                          | Vintage Cars     |
+| 1964 Mercedes Tour Bus                      | Trucks and Buses |
+| 1932 Model A Ford J-Coupe                   | Vintage Cars     |
+| 1926 Ford Fire Engine                       | Trucks and Buses |
+| P-51-D Mustang                              | Planes           |
+| 1936 Harley Davidson El Knucklehead         | Motorcycles      |
+| 1928 Mercedes-Benz SSK                      | Vintage Cars     |
+| 1999 Indy 500 Monte Carlo SS                | Classic Cars     |
+| 1913 Ford Model T Speedster                 | Vintage Cars     |
+| 1934 Ford V8 Coupe                          | Vintage Cars     |
+| 1999 Yamaha Speed Boat                      | Ships            |
+| 18th Century Vintage Horse Carriage         | Vintage Cars     |
+| 1903 Ford Model A                           | Vintage Cars     |
+| 1992 Ferrari 360 Spider red                 | Classic Cars     |
+| 1985 Toyota Supra                           | Classic Cars     |
+| Collectable Wooden Train                    | Trains           |
+| 1969 Dodge Super Bee                        | Classic Cars     |
+| 1917 Maxwell Touring Car                    | Vintage Cars     |
+| 1976 Ford Gran Torino                       | Classic Cars     |
+| 1948 Porsche Type 356 Roadster              | Classic Cars     |
+| 1957 Vespa GS150                            | Motorcycles      |
+| 1941 Chevrolet Special Deluxe Cabriolet     | Vintage Cars     |
+| 1970 Triumph Spitfire                       | Classic Cars     |
+| 1932 Alfa Romeo 8C2300 Spider Sport         | Vintage Cars     |
+| 1904 Buick Runabout                         | Vintage Cars     |
+| 1940s Ford truck                            | Trucks and Buses |
+| 1939 Cadillac Limousine                     | Vintage Cars     |
+| 1957 Corvette Convertible                   | Classic Cars     |
+| 1957 Ford Thunderbird                       | Classic Cars     |
+| 1970 Chevy Chevelle SS 454                  | Classic Cars     |
+| 1970 Dodge Coronet                          | Classic Cars     |
+| 1997 BMW R 1100 S                           | Motorcycles      |
+| 1966 Shelby Cobra 427 S/C                   | Classic Cars     |
+| 1928 British Royal Navy Airplane            | Planes           |
+| 1939 Chevrolet Deluxe Coupe                 | Vintage Cars     |
+| 1960 BSA Gold Star DBD34                    | Motorcycles      |
+| 18th century schooner                       | Ships            |
+| 1938 Cadillac V-16 Presidential Limousine   | Vintage Cars     |
+| 1962 Volkswagen Microbus                    | Trucks and Buses |
+| 1982 Ducati 900 Monster                     | Motorcycles      |
+| 1949 Jaguar XK 120                          | Classic Cars     |
+| 1958 Chevy Corvette Limited Edition         | Classic Cars     |
+| 1900s Vintage Bi-Plane                      | Planes           |
+| 1952 Citroen-15CV                           | Classic Cars     |
+| 1982 Lamborghini Diablo                     | Classic Cars     |
+| 1912 Ford Model T Delivery Wagon            | Vintage Cars     |
+| 1969 Chevrolet Camaro Z28                   | Classic Cars     |
+| 1971 Alpine Renault 1600s                   | Classic Cars     |
+| 1937 Horch 930V Limousine                   | Vintage Cars     |
+| 2002 Chevy Corvette                         | Classic Cars     |
+| 1940 Ford Delivery Sedan                    | Vintage Cars     |
+| 1956 Porsche 356A Coupe                     | Classic Cars     |
+| Corsair F4U ( Bird Cage)                    | Planes           |
+| 1936 Mercedes Benz 500k Roadster            | Vintage Cars     |
+| 1992 Porsche Cayenne Turbo Silver           | Classic Cars     |
+| 1936 Chrysler Airflow                       | Vintage Cars     |
+| 1900s Vintage Tri-Plane                     | Planes           |
+| 1961 Chevrolet Impala                       | Classic Cars     |
+| 1980?s GM Manhattan Express                 | Trucks and Buses |
+| 1997 BMW F650 ST                            | Motorcycles      |
+| 1982 Ducati 996 R                           | Motorcycles      |
+| 1954 Greyhound Scenicruiser                 | Trucks and Buses |
+| 1950's Chicago Surface Lines Streetcar      | Trains           |
+| 1996 Peterbilt 379 Stake Bed with Outrigger | Trucks and Buses |
+| 1928 Ford Phaeton Deluxe                    | Vintage Cars     |
+| 1974 Ducati 350 Mk3 Desmo                   | Motorcycles      |
+| 1930 Buick Marquette Phaeton                | Vintage Cars     |
+| Diamond T620 Semi-Skirted Tanker            | Trucks and Buses |
+| 1962 City of Detroit Streetcar              | Trains           |
+| 2002 Yamaha YZR M1                          | Motorcycles      |
+| The Schooner Bluenose                       | Ships            |
+| American Airlines: B767-300                 | Planes           |
+| The Mayflower                               | Ships            |
+| HMS Bounty                                  | Ships            |
+| America West Airlines B757-200              | Planes           |
+| The USS Constitution Ship                   | Ships            |
+| 1982 Camaro Z28                             | Classic Cars     |
+| ATA: B757-300                               | Planes           |
+| F/A 18 Hornet 1/72                          | Planes           |
+| The Titanic                                 | Ships            |
+| The Queen Mary                              | Ships            |
+| American Airlines: MD-11S                   | Planes           |
+| Boeing X-32A JSF                            | Planes           |
+| Pont Yacht                                  | Ships            |
++---------------------------------------------+------------------+
+110 rows in set (0.00 sec)
+
+mysql> select productcode, productname, buyprice, quantityinstock, productVendor, productline
+    -> from products
+    -> where productline = 'classic cars' or productvendor = 'Min Lin Diecast';
++-------------+---------------------------------------+----------+-----------------+---------------------------+--------------+
+| productcode | productname                           | buyprice | quantityinstock | productVendor             | productline  |
++-------------+---------------------------------------+----------+-----------------+---------------------------+--------------+
+| S10_1678    | 1969 Harley Davidson Ultimate Chopper |    48.81 |            7933 | Min Lin Diecast           | Motorcycles  |
+| S10_1949    | 1952 Alpine Renault 1300              |    98.58 |            7305 | Classic Metal Creations   | Classic Cars |
+| S10_4757    | 1972 Alfa Romeo GTA                   |    85.68 |            3252 | Motor City Art Classics   | Classic Cars |
+| S10_4962    | 1962 LanciaA Delta 16V                |   103.42 |            6791 | Second Gear Diecast       | Classic Cars |
+| S12_1099    | 1968 Ford Mustang                     |    95.34 |              68 | Autoart Studio Design     | Classic Cars |
+| S12_1108    | 2001 Ferrari Enzo                     |    95.59 |            3619 | Second Gear Diecast       | Classic Cars |
+| S12_3148    | 1969 Corvair Monza                    |    89.14 |            6906 | Welly Diecast Productions | Classic Cars |
+| S12_3380    | 1968 Dodge Charger                    |    75.16 |            9123 | Welly Diecast Productions | Classic Cars |
+| S12_3891    | 1969 Ford Falcon                      |    83.05 |            1049 | Second Gear Diecast       | Classic Cars |
+| S12_3990    | 1970 Plymouth Hemi Cuda               |    31.92 |            5663 | Studio M Art Models       | Classic Cars |
+| S12_4675    | 1969 Dodge Charger                    |    58.73 |            7323 | Welly Diecast Productions | Classic Cars |
+| S18_1129    | 1993 Mazda RX-7                       |    83.51 |            3975 | Highway 66 Mini Classics  | Classic Cars |
+| S18_1589    | 1965 Aston Martin DB5                 |    65.96 |            9042 | Classic Metal Creations   | Classic Cars |
+| S18_1889    | 1948 Porsche 356-A Roadster           |    53.90 |            8826 | Gearbox Collectibles      | Classic Cars |
+| S18_1984    | 1995 Honda Civic                      |    93.89 |            9772 | Min Lin Diecast           | Classic Cars |
+| S18_2238    | 1998 Chrysler Plymouth Prowler        |   101.51 |            4724 | Gearbox Collectibles      | Classic Cars |
+| S18_2870    | 1999 Indy 500 Monte Carlo SS          |    56.76 |            8164 | Red Start Diecast         | Classic Cars |
+| S18_2957    | 1934 Ford V8 Coupe                    |    34.35 |            5649 | Min Lin Diecast           | Vintage Cars |
+| S18_3029    | 1999 Yamaha Speed Boat                |    51.61 |            4259 | Min Lin Diecast           | Ships        |
+| S18_3232    | 1992 Ferrari 360 Spider red           |    77.90 |            8347 | Unimax Art Galleries      | Classic Cars |
+| S18_3233    | 1985 Toyota Supra                     |    57.01 |            7733 | Highway 66 Mini Classics  | Classic Cars |
+| S18_3278    | 1969 Dodge Super Bee                  |    49.05 |            1917 | Min Lin Diecast           | Classic Cars |
+| S18_3482    | 1976 Ford Gran Torino                 |    73.49 |            9127 | Gearbox Collectibles      | Classic Cars |
+| S18_3685    | 1948 Porsche Type 356 Roadster        |    62.16 |            8990 | Gearbox Collectibles      | Classic Cars |
+| S18_4027    | 1970 Triumph Spitfire                 |    91.92 |            5545 | Min Lin Diecast           | Classic Cars |
+| S18_4721    | 1957 Corvette Convertible             |    69.93 |            1249 | Classic Metal Creations   | Classic Cars |
+| S18_4933    | 1957 Ford Thunderbird                 |    34.21 |            3209 | Studio M Art Models       | Classic Cars |
+| S24_1046    | 1970 Chevy Chevelle SS 454            |    49.24 |            1005 | Unimax Art Galleries      | Classic Cars |
+| S24_1444    | 1970 Dodge Coronet                    |    32.37 |            4074 | Highway 66 Mini Classics  | Classic Cars |
+| S24_1628    | 1966 Shelby Cobra 427 S/C             |    29.18 |            8197 | Carousel DieCast Legends  | Classic Cars |
+| S24_2766    | 1949 Jaguar XK 120                    |    47.25 |            2350 | Classic Metal Creations   | Classic Cars |
+| S24_2840    | 1958 Chevy Corvette Limited Edition   |    15.91 |            2542 | Carousel DieCast Legends  | Classic Cars |
+| S24_2887    | 1952 Citroen-15CV                     |    72.82 |            1452 | Exoto Designs             | Classic Cars |
+| S24_2972    | 1982 Lamborghini Diablo               |    16.24 |            7723 | Second Gear Diecast       | Classic Cars |
+| S24_3151    | 1912 Ford Model T Delivery Wagon      |    46.91 |            9173 | Min Lin Diecast           | Vintage Cars |
+| S24_3191    | 1969 Chevrolet Camaro Z28             |    50.51 |            4695 | Exoto Designs             | Classic Cars |
+| S24_3371    | 1971 Alpine Renault 1600s             |    38.58 |            7995 | Welly Diecast Productions | Classic Cars |
+| S24_3432    | 2002 Chevy Corvette                   |    62.11 |            9446 | Gearbox Collectibles      | Classic Cars |
+| S24_3856    | 1956 Porsche 356A Coupe               |    98.30 |            6600 | Classic Metal Creations   | Classic Cars |
+| S24_4048    | 1992 Porsche Cayenne Turbo Silver     |    69.78 |            6582 | Exoto Designs             | Classic Cars |
+| S24_4620    | 1961 Chevrolet Impala                 |    32.33 |            7869 | Classic Metal Creations   | Classic Cars |
+| S700_1691   | American Airlines: B767-300           |    51.15 |            5841 | Min Lin Diecast           | Planes       |
+| S700_2824   | 1982 Camaro Z28                       |    46.53 |            6934 | Carousel DieCast Legends  | Classic Cars |
++-------------+---------------------------------------+----------+-----------------+---------------------------+--------------+
+43 rows in set (0.00 sec)
+
+mysql>
